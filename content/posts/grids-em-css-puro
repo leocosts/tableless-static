@@ -1,0 +1,94 @@
+#Grids em CSS puro
+##Veja como a mágdsfica acontece
+
+Uma das grandes vantagens do uso de frameworks como Bootstrap, sem dúvida nenhuma, é a possibilidade do uso das grids, com elas, é possivel desenvolver sites responsivos de maneira mais fácil e ágio, mas já tem um tempo que o CSS incluiu as grids em sua biblioteca e as boas novas é que boa parte dos browsers já estão implementando essa funcionalidade em seus sistemas.
+
+###Conceito
+Primeiro, esqueça a forma com que a maior parte dos frameworks trabalham com grids e comece a assimilhar o conceito proposto pelo CSS. Como sabemos, um sistema de grids é composto por linhas (rows) e colunas (columns) e no caso do CSS você terá primeiro que definir a propriedade display como grid, depois você irá definir o comportamento das linhas e o das colunas e por último incluir os elementos dentro dos espaços desta grid. Parece confuso? Vamos para o exemplo:
+
+###Começando
+A maior parte dos frameworks trabalham com um sistema de grids de 12 colunas, então o que vamos fazer aqui é apresentar um sistema de 12 colunas, a primeira linha será ocupada toda pelo conteúdo cinza, já a segunda linha será dividida em 2 partes, cada uma contendo 6 colunas, que terão as cores azul e verde, respectivamente. Então, vamos ao código com a explicação detalhada:
+
+HTML:
+```
+<div class="grid-container">
+  <div class="header-content"> 
+    <!-- cinza -->
+  </div>
+  <div class="left-content">  
+    <!-- azul -->
+  </div>
+  <div class="right-content"> 
+    <!-- verde -->
+  </div>
+</div>
+```
+
+Nada de novo, criamos um arquivo HTML com 3 divs.
+
+CSS:
+```
+.header-content{
+  grid-area: header;
+  /* nomeando a área onde o header-content será inserido */
+  background-color: #73827C;
+}
+.left-content{
+  grid-area: leftarea;
+  /* nomeando a área onde o left-content será inserido */
+  background-color: #233040;
+}
+.right-content{
+  grid-area: rightarea;
+  /* nomeando a área onde o right-content será inserido */
+  background-color: #18AC9A;
+}
+```
+Primeiro vamos nomear as áreas onde as respectivas divs serão inseridas, são com os nomes informados na grid-area que iremos especificar onde cada elemento vai estar localizado em nossa grid, depois vamos declarar o container do nosso HTML:
+
+CSS:
+```
+.grid-container{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  /* cria 12 colunas*/
+  grid-template-rows: 100px 200px;
+  /* declara a altura da primeira linha com 100px e da segunda com 200px */
+  grid-template-areas: 
+    "header header header header header header header header header header header header"
+    /* Declaro que o header-content ocupará 12 colunas */
+    "leftarea leftarea leftarea leftarea leftarea leftarea rightarea rightarea rightarea rightarea rightarea rightarea"  
+    /* Declaro que o leftarea ocupará 6 colunas e após o rightarea ocupará as outras 6 */
+    
+}
+```
+Onde:
+
+* display:grid — Declara que o nosso container é do tipo grid com o conteúdo se comportando como block, caso você queira o conteúdo se comportando como inline, a declaração deve ser inline-grid, ou ainda subgrid, se você pretende inserir uma grid dentro de outra.
+* Grid-template-columns: repeat(12, 1fr) — Declara que teremos uma coluna de 1fr, isso é, uma fração da largura do container repetindo 12 vezes, é o mesmo que declarar:
+```
+Grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr";
+```
+
+Caso você queira, pode declarar a largura das colunas com pixels ou porcentagens, como por exemplo:
+```
+Grid-template-columns:200px 200px;
+```
+ou
+```
+Grid-template-columns:50% 50%;
+```
+ou ainda mesclar:
+```
+Grid-template-columns:100px 1fr 200px;
+```
+* grid-template-rows: 100px 200px — Declara a primeira linha com altura de 100px e a segunda com altura de 200px, você também pode declarar como auto, caso queira que a altura seja igual ao tamanho do elemento que a ocupa.
+* grid-template-areas — Aqui você determina onde cada elemento deve permanecer, perceba que cada linha deve conter exatamente a quantidade de colunas e caso você queira deixar colunas vazias, basta adicionar um ponto, como no exemplo a seguir, onde a terceira coluna daquela linha estará vazia:
+```
+grid-template-areas: 
+    "header header . header header header header header header header header header"
+```
+
+[Veja funcionando](https://codepen.io/leandroscosta/pen/YQWRWB)
+
+É isso, a ideia foi só passar os conceitos básicos mesmo, sem muita complicação.
